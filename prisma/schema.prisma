@@ -21,6 +21,11 @@ enum PaymentStatus {
   REFUNDED
 }
 
+enum DeliveryMethod {
+  DOOR_DELIVERY
+  PARK_PICKUP
+}
+
 model Category {
   id        String    @id @default(cuid())
   name      String    @unique
@@ -73,8 +78,14 @@ model Order {
   id            String        @id @default(cuid())
   orderNumber   String        @unique
   customerName  String
+  email         String        @default("")
   phone         String
+  state         String        @default("")
+  city          String        @default("")
   address       String
+  notes         String        @default("")
+  deliveryMethod DeliveryMethod @default(DOOR_DELIVERY)
+  pickupLocation String?
   paymentStatus PaymentStatus @default(PENDING)
   status        OrderStatus   @default(PENDING)
   subtotal      Int
