@@ -27,15 +27,12 @@ export function Announcement() {
   const { settings } = useCms();
   return (
     <div className="announcement">
-      <span className="announcement-location">
-        <MapPin /> {settings.locations.join(" & ")}
-      </span>
-      <span className="announcement-phone">
-        <Phone /> +234 803 863 6561
-      </span>
-      <span className="announcement-delivery">
-        <Truck /> {settings.deliveryText}
-      </span>
+      <div className="announcement-item announcement-phone">
+        <Phone /> <span className="announcement-copy">+234 803 863 6561</span>
+      </div>
+      <div className="announcement-item announcement-delivery">
+        <Truck /> <span className="announcement-copy">{settings.deliveryText}</span>
+      </div>
     </div>
   );
 }

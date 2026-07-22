@@ -45,3 +45,8 @@ footer{font-size:16px}.footer-top h4{font-size:17px}.footer-top a,.footer-top p{
 @media(max-width:340px){.announcement{padding-inline:10px;font-size:12px}.announcement-delivery{max-width:300px}}
 
 .insta-grid .tiktok-mark{position:absolute;inset:0;margin:auto;width:42px;height:42px;display:grid;place-items:center;color:#fff;font-size:34px;opacity:0;transition:.3s}.insta-grid a:hover .tiktok-mark{opacity:1}
+
+/* Final announcement contract: phone and delivery only, with indivisible icon/text groups. */
+.announcement .announcement-item{display:flex;align-items:center;justify-content:center;gap:8px;min-width:0}.announcement .announcement-copy{display:inline!important;width:auto!important;height:auto!important;background:none!important;white-space:nowrap!important;text-align:center}.announcement .announcement-item svg{flex:0 0 auto}
+@media(max-width:900px){.announcement{display:flex!important;flex-direction:column;justify-content:center;min-height:82px;height:auto;padding:10px 12px;gap:8px}.announcement .announcement-item{width:100%;margin:0 auto;font-size:clamp(12px,3.5vw,14px);line-height:1.25}.announcement .announcement-phone{max-width:250px}.announcement .announcement-delivery{max-width:390px}.announcement .announcement-copy{min-width:0}.announcement .announcement-delivery .announcement-copy{white-space:normal!important}}
+@media(max-width:340px){.announcement .announcement-item{font-size:12px}.announcement .announcement-delivery{max-width:300px}}
