@@ -146,3 +146,16 @@ footer{font-size:16px}.footer-top h4{font-size:17px}.footer-top a,.footer-top p{
 @media(max-width:360px){
   .wordmark{width:60vw}
 }
+
+/* Scale header controls with the stronger wordmark. */
+@media(min-width:901px){
+  .nav-actions svg,.header-cart svg{width:28px;height:28px}
+}
+
+@media(max-width:900px){
+  .nav-actions svg,.mobile-icon svg,.header-cart svg{width:25px;height:25px}
+}
+
+@media(max-width:360px){
+  .nav-actions svg,.mobile-icon svg,.header-cart svg{width:24px;height:24px}
+}
