@@ -78,6 +78,10 @@ export default async function RootLayout({
             category: product.category.name,
             image: product.images[0]?.url || fallbackProducts[0].image,
             images: product.images.map((image) => image.url),
+            media: product.images.map((item) => ({url:item.url,type:item.type})),
+            lengths: product.lengths,
+            densities: product.densities,
+            colors: product.colors,
             tag: product.bestSeller
               ? "Bestseller"
               : product.featured
@@ -102,6 +106,7 @@ export default async function RootLayout({
             bankAccountName: settings.bankAccountName,
             bankAccountNumber: settings.bankAccountNumber,
             footerText: settings.footerText,
+            defaultProductDescription: settings.defaultProductDescription,
           }
         : {
             businessName: "HairByIshe",
@@ -116,6 +121,7 @@ export default async function RootLayout({
             bankAccountNumber: "1234567890",
             footerText:
               "Thoughtfully sourced hair. Beautifully made units. Made personal, just for you.",
+            defaultProductDescription: "Premium quality hair.\n\nSoft, silky and long-lasting.\n\nFeatures:\n\n✓ Minimal shedding\n✓ Tangle free\n✓ Natural hairline\n✓ Beginner friendly\n✓ Luxury quality\n\nDelivery available nationwide and internationally.",
           },
       content: {
         heroTitle: content.heroTitle || "Hair that feels like you.",
@@ -148,6 +154,7 @@ export default async function RootLayout({
         bankAccountNumber: "1234567890",
         footerText:
           "Thoughtfully sourced hair. Beautifully made units. Made personal, just for you.",
+        defaultProductDescription: "Premium quality hair.\n\nSoft, silky and long-lasting.\n\nFeatures:\n\n✓ Minimal shedding\n✓ Tangle free\n✓ Natural hairline\n✓ Beginner friendly\n✓ Luxury quality\n\nDelivery available nationwide and internationally.",
       },
       content: {
         heroTitle: "Hair that feels like you.",

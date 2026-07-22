@@ -48,6 +48,9 @@ model Product {
   category      Category         @relation(fields: [categoryId], references: [id])
   categoryId    String
   images        ProductImage[]
+  lengths       String[]         @default([])
+  densities     String[]         @default([])
+  colors        String[]         @default([])
   variants      ProductVariant[]
   orderItems    OrderItem[]
   createdAt     DateTime         @default(now())
@@ -59,6 +62,7 @@ model ProductImage {
   url       String
   alt       String?
   position  Int     @default(0)
+  type      String  @default("image")
   product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
   productId String
 }
@@ -127,6 +131,7 @@ model StoreSettings {
   bankAccountName String @default("HairByIshe Enterprises")
   bankAccountNumber String @default("1234567890")
   footerText   String   @default("Thoughtfully sourced hair. Beautifully made units. Made personal, just for you.")
+  defaultProductDescription String @default("Premium quality hair.\n\nSoft, silky and long-lasting.\n\nFeatures:\n\n✓ Minimal shedding\n✓ Tangle free\n✓ Natural hairline\n✓ Beginner friendly\n✓ Luxury quality\n\nDelivery available nationwide and internationally.")
   updatedAt    DateTime @updatedAt
 }
 

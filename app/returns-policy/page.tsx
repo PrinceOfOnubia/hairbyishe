@@ -1,0 +1,3 @@
+import {PolicyPage} from "../policy-page";
+export const metadata={title:"Returns Policy"};
+export default function Page(){return <PolicyPage eyebrow="Customer support" title="Returns Policy" intro="We offer a 7–14 day return window. We provide refunds if goods are defective, unsafe, or do not match the agreed description." sections={[{title:"Return conditions",items:["Unused","Original packaging","Original condition"]},{title:"Non-returnable items",items:["Used hair products","Customized wigs","Colored custom orders","Beauty products","Intimate products — unless defective"]},{title:"Refund processing",body:"Contact HairByIshe before returning an item. Once the returned item is inspected and approved, refund instructions and timing will be confirmed."}]}/>}

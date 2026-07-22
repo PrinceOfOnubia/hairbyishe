@@ -13,6 +13,8 @@ export function CheckoutPage() {
   const [delivery, setDelivery] = useState("DOOR_DELIVERY");
   const [submitting, setSubmitting] = useState(false);
   const [order, setOrder] = useState<string | null>(null);
+  const [copied,setCopied]=useState(false);
+  const deliveryFee=delivery==="PARK_PICKUP"?5000:8000;
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setSubmitting(true);
@@ -45,16 +47,7 @@ export function CheckoutPage() {
       <Shell>
         <section className="checkout-success">
           <Check />
-          <p className="eyebrow">Order received</p>
-          <h1>Thank you.</h1>
-          <p>
-            Your order <b>{order}</b> is marked{" "}
-            <b>Payment Pending Verification</b>. We will contact you after
-            confirming your transfer.
-          </p>
-          <Link className="button dark" href="/collections">
-            Continue shopping
-          </Link>
+          <p className="eyebrow">Order {order}</p><h1>Order Placed Successfully.</h1><p>Thank you for shopping with HairByIshe.</p><p>We will verify payment and contact you shortly.</p><div className="success-actions"><Link className="button dark" href="/collections">Continue Shopping</Link><a className="button outline" href={`https://wa.me/${settings.whatsapp}`} target="_blank">Contact on WhatsApp</a></div>
         </section>
       </Shell>
     );
@@ -135,14 +128,9 @@ export function CheckoutPage() {
                   </label>
                 </div>
                 {delivery === "PARK_PICKUP" && (
-                  <label className="pickup">
-                    Pickup location
-                    <select name="pickupLocation" required>
-                      <option>Akure</option>
-                      <option>Lagos</option>
-                    </select>
-                  </label>
+                  <div className="form-grid pickup-fields"><label>State<input required name="pickupState"/></label><label>City<input required name="pickupCity"/></label><label className="wide">Preferred Pickup Location<input required name="pickupLocation" placeholder="Enter a convenient motor park or pickup point"/></label></div>
                 )}
+                <div className="shipping-summary"><b>Shipping & returns</b><p>Nationwide Delivery Across Nigeria. International Shipping Available.</p><p>7–14 day return window. Items must be unused and in original packaging and condition.</p></div>
               </section>
               <aside>
                 <h2>Your order</h2>
@@ -152,9 +140,7 @@ export function CheckoutPage() {
                     <strong>{formatPriceNGN(i.price * i.quantity)}</strong>
                   </p>
                 ))}
-                <div className="checkout-total">
-                  Total <strong>{formatPriceNGN(total)}</strong>
-                </div>
+                <div className="checkout-breakdown"><p>Product Total <strong>{formatPriceNGN(total)}</strong></p><p>Delivery Fee <strong>{formatPriceNGN(deliveryFee)}</strong></p></div><div className="checkout-total">Final Total <strong>{formatPriceNGN(total+deliveryFee)}</strong></div>
                 <div className="bank">
                   <p className="eyebrow">Direct bank transfer</p>
                   <h3>{settings.bankName}</h3>
@@ -164,6 +150,7 @@ export function CheckoutPage() {
                   <p>
                     Account Number: <b>{settings.bankAccountNumber}</b>
                   </p>
+                  <button type="button" className="copy-account" onClick={async()=>{await navigator.clipboard.writeText(settings.bankAccountNumber);setCopied(true);setTimeout(()=>setCopied(false),2200)}}>{copied?"✔ Account Number Copied":"Copy"}</button>
                   <small>
                     Transfer the exact order total, then click the button below.
                     Your payment will be verified before fulfilment.

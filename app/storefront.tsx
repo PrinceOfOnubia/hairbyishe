@@ -21,6 +21,7 @@ import {
 import { categories, formatPriceNGN, products, type Product } from "./data";
 import { cartKey, useCart } from "./cart-context";
 import { useCms } from "./cms-context";
+import { useRouter } from "next/navigation";
 
 export function Announcement() {
   const { settings } = useCms();
@@ -182,7 +183,7 @@ export function Footer() {
         </div>
       </div>
       <div className="footer-bottom">
-        © 2026 HairByIshe <span>Privacy · Terms · Delivery</span>
+        © 2026 HairByIshe <span><Link href="/privacy-policy">Privacy</Link> · <Link href="/terms-and-conditions">Terms</Link> · <Link href="/delivery-information">Delivery</Link> · <Link href="/returns-policy">Returns</Link></span>
       </div>
     </footer>
   );
@@ -299,7 +300,8 @@ export function ProductCard({
   product: Product;
   index?: number;
 }) {
-  const [liked, setLiked] = useState(false);
+  const {wishlist,toggleWishlist}=useCart();
+  const liked=wishlist.includes(product.id);
   return (
     <motion.article
       className="product-card"
@@ -315,7 +317,7 @@ export function ProductCard({
         {product.tag && <span className="tag">{product.tag}</span>}
         <button
           className={`heart ${liked ? "active" : ""}`}
-          onClick={() => setLiked(!liked)}
+          onClick={() => toggleWishlist(product.id)}
           aria-label="Save to wishlist"
         >
           <Heart fill={liked ? "black" : "none"} />
@@ -624,10 +626,10 @@ export function CollectionsPage() {
 }
 
 export function ProductPage({ product }: { product: Product }) {
-  const [length, setLength] = useState('18"');
-  const [density, setDensity] = useState("180%");
+  const [length, setLength] = useState(product.lengths?.[0]||'18"');
+  const [density, setDensity] = useState(product.densities?.[0]||"180%");
   const [qty, setQty] = useState(1);
-  const [buyOpen, setBuyOpen] = useState(false);
+  const router=useRouter();
   const { addItem } = useCart();
   const { products: cmsProducts, settings } = useCms();
   useEffect(() => {
@@ -648,11 +650,7 @@ export function ProductPage({ product }: { product: Product }) {
     <Shell>
       <section className="product-page">
         <div className="gallery">
-          <img src={product.image} alt={product.name} />
-          <div>
-            <img src={product.image} alt="Front view" />
-            <img src={product.image} alt="Hair detail" />
-          </div>
+          {(product.media?.length?product.media:[{url:product.image,type:"image"}]).map((item,index)=>item.type==="video"?<video key={item.url} src={item.url} controls playsInline aria-label={`${product.name} video ${index+1}`}/>:<img key={item.url} src={item.url} alt={`${product.name} view ${index+1}`}/>)}
         </div>
         <div className="product-detail">
           <p className="eyebrow">{product.category}</p>
@@ -667,7 +665,7 @@ export function ProductPage({ product }: { product: Product }) {
               Hair length <b>{length}</b>
             </legend>
             <div className="options">
-              {['16"', '18"', '20"', '22"', '24"'].map((v) => (
+              {(product.lengths?.length?product.lengths:['16"', '18"', '20"', '22"', '24"']).map((v) => (
                 <button
                   className={length === v ? "selected" : ""}
                   onClick={() => setLength(v)}
@@ -683,7 +681,7 @@ export function ProductPage({ product }: { product: Product }) {
               Density <b>{density}</b>
             </legend>
             <div className="options">
-              {["150%", "180%", "200%"].map((v) => (
+              {(product.densities?.length?product.densities:["150%", "180%", "200%"]).map((v) => (
                 <button
                   className={density === v ? "selected" : ""}
                   onClick={() => setDensity(v)}
@@ -708,7 +706,7 @@ export function ProductPage({ product }: { product: Product }) {
               Add to cart
             </button>
           </div>
-          <button className="button outline" onClick={() => setBuyOpen(true)}>
+          <button className="button outline" onClick={() => {add();setTimeout(()=>router.push("/checkout"),0)}}>
             Buy now
           </button>
           <a
@@ -740,33 +738,9 @@ export function ProductPage({ product }: { product: Product }) {
             </summary>
             <p>Delivery timelines vary by location and unit availability.</p>
           </details>
+          <details open><summary>Shipping & returns <Plus /></summary><p>Nationwide Delivery Across Nigeria. International Shipping Available.</p><p>7–14 day returns for unused items in original packaging and condition. Customized, colored or used products are non-returnable unless defective.</p></details>
         </div>
       </section>
-      {buyOpen && (
-        <div className="buy-modal">
-          <button
-            className="modal-backdrop"
-            onClick={() => setBuyOpen(false)}
-          />
-          <div>
-            <button className="modal-close" onClick={() => setBuyOpen(false)}>
-              <X />
-            </button>
-            <p className="eyebrow">Choose order method</p>
-            <h2>How would you like to order?</h2>
-            <Link className="button dark" href="/checkout" onClick={add}>
-              Order on Website
-            </Link>
-            <a
-              className="button outline"
-              href={`https://wa.me/${settings.whatsapp}?text=${encodeURIComponent(message)}`}
-              target="_blank"
-            >
-              Order via WhatsApp
-            </a>
-          </div>
-        </div>
-      )}
       <section className="related products-section">
         <div className="section-head">
           <h2>You may also like</h2>
@@ -792,25 +766,7 @@ export function SimplePage({
   const { settings, products: cmsProducts } = useCms();
   const displayProducts = cmsProducts.length ? cmsProducts : products;
   if (type === "cart") return <CartPage />;
-  if (type === "wishlist")
-    return (
-      <Shell>
-        <section className="simple">
-          <p className="eyebrow">Saved pieces</p>
-          <h1>
-            Your <em>wishlist.</em>
-          </h1>
-          <div className="empty">
-            <Heart />
-            <h2>Keep your favourites close</h2>
-            <p>Tap the heart on any piece to save it here.</p>
-            <Link className="button dark" href="/collections">
-              Browse the collection
-            </Link>
-          </div>
-        </section>
-      </Shell>
-    );
+  if (type === "wishlist") return <WishlistPage products={displayProducts}/>;
   if (type === "about")
     return (
       <Shell>
@@ -895,6 +851,8 @@ export function SimplePage({
     </Shell>
   );
 }
+
+function WishlistPage({products}:{products:Product[]}){const {wishlist}=useCart();const saved=products.filter(product=>wishlist.includes(product.id));return <Shell><section className="simple"><p className="eyebrow">Saved pieces</p><h1>Your <em>wishlist.</em></h1>{saved.length?<div className="product-grid">{saved.map((product,index)=><ProductCard key={product.id} product={product} index={index}/>)}</div>:<div className="empty"><Heart/><h2>Keep your favourites close</h2><p>Tap the heart on any piece to save it here.</p><Link className="button dark" href="/collections">Browse the collection</Link></div>}</section></Shell>}
 
 function CartPage() {
   const { items, total, removeItem, updateQuantity } = useCart();
