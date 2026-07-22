@@ -1,0 +1,124 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum OrderStatus {
+  PENDING
+  PROCESSING
+  SHIPPED
+  DELIVERED
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+}
+
+model Category {
+  id        String    @id @default(cuid())
+  name      String    @unique
+  slug      String    @unique
+  products  Product[]
+  createdAt DateTime  @default(now())
+}
+
+model Product {
+  id            String           @id @default(cuid())
+  name          String
+  slug          String           @unique
+  description   String
+  price         Int
+  discountPrice Int?
+  inventory     Int              @default(0)
+  featured      Boolean          @default(false)
+  bestSeller    Boolean          @default(false)
+  published     Boolean          @default(true)
+  category      Category         @relation(fields: [categoryId], references: [id])
+  categoryId    String
+  images        ProductImage[]
+  variants      ProductVariant[]
+  orderItems    OrderItem[]
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+}
+
+model ProductImage {
+  id        String  @id @default(cuid())
+  url       String
+  alt       String?
+  position  Int     @default(0)
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId String
+}
+
+model ProductVariant {
+  id              String  @id @default(cuid())
+  length          String
+  density         String
+  inventory       Int     @default(0)
+  priceAdjustment Int     @default(0)
+  product         Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId       String
+  @@unique([productId, length, density])
+}
+
+model Order {
+  id            String        @id @default(cuid())
+  orderNumber   String        @unique
+  customerName  String
+  phone         String
+  address       String
+  paymentStatus PaymentStatus @default(PENDING)
+  status        OrderStatus   @default(PENDING)
+  subtotal      Int
+  deliveryFee   Int           @default(0)
+  items         OrderItem[]
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+}
+
+model OrderItem {
+  id        String  @id @default(cuid())
+  quantity  Int
+  price     Int
+  length    String?
+  density   String?
+  product   Product @relation(fields: [productId], references: [id])
+  productId String
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  orderId   String
+}
+
+model ContentBlock {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     Json
+  updatedAt DateTime @updatedAt
+}
+
+model StoreSettings {
+  id           String   @id @default("store")
+  locations    String[]
+  instagram    String
+  tiktok       String
+  phone        String
+  whatsapp     String
+  deliveryText String
+  updatedAt    DateTime @updatedAt
+}
+
+model Testimonial {
+  id        String  @id @default(cuid())
+  name      String
+  location  String
+  quote     String
+  published Boolean @default(true)
+  position  Int     @default(0)
+}
