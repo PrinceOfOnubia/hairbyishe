@@ -31,6 +31,9 @@ export function AdminDashboard({ email, orders }: { email: string; orders: Admin
   const [showNew, setShowNew] = useState(false);
   const [uploads, setUploads] = useState<string[]>([]);
   const [uploading, setUploading] = useState(false);
+  const [settings, setSettings] = useState({ locations:"Akure, Lagos", instagram:"https://instagram.com/hairbyishe", tiktok:"https://tiktok.com/@hairbyishe_2", phone:"08038636561", whatsapp:"08038636561" });
+  const [savingSettings,setSavingSettings]=useState(false);
+  async function saveSettings(){setSavingSettings(true);const response=await fetch("/api/admin/settings",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({...settings,locations:settings.locations.split(",").map(value=>value.trim()).filter(Boolean)})});setSavingSettings(false);alert(response.ok?"Settings saved":"Unable to save settings")}
   async function uploadImage(file?: File) {
     if (!file) return;
     setUploading(true);
@@ -296,28 +299,28 @@ export function AdminDashboard({ email, orders }: { email: string; orders: Admin
                 <h3>Store settings</h3>
                 <p>Business information and social links.</p>
               </div>
-              <button className="admin-primary">Save settings</button>
+              <button className="admin-primary" onClick={saveSettings} disabled={savingSettings}>{savingSettings?"Saving…":"Save settings"}</button>
             </div>
             <div className="content-form">
               <label>
                 Pickup Locations
-                <input defaultValue="Akure, Lagos" />
+                <input value={settings.locations} onChange={event=>setSettings({...settings,locations:event.target.value})} />
               </label>
               <label>
                 Instagram
-                <input defaultValue="https://instagram.com/hairbyishe" />
+                <input value={settings.instagram} onChange={event=>setSettings({...settings,instagram:event.target.value})} />
               </label>
               <label>
                 TikTok
-                <input defaultValue="https://tiktok.com/@hairbyishe_2" />
+                <input value={settings.tiktok} onChange={event=>setSettings({...settings,tiktok:event.target.value})} />
               </label>
               <label>
                 Business Phone
-                <input defaultValue="08038636561" />
+                <input value={settings.phone} onChange={event=>setSettings({...settings,phone:event.target.value})} />
               </label>
               <label>
                 WhatsApp Number
-                <input defaultValue="08038636561" />
+                <input value={settings.whatsapp} onChange={event=>setSettings({...settings,whatsapp:event.target.value})} />
               </label>
             </div>
           </section>
