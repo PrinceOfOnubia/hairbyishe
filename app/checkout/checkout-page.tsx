@@ -136,10 +136,10 @@ export function CheckoutPage() {
                   <p>
                     Account Name: <b>{settings.bankAccountName}</b>
                   </p>
-                  <p>
-                    Account Number: <b>{settings.bankAccountNumber}</b>
-                  </p>
-                  <button type="button" className="copy-account" onClick={async()=>{await navigator.clipboard.writeText(settings.bankAccountNumber);setCopied(true);setTimeout(()=>setCopied(false),2200)}}>{copied?"✔ Account Number Copied":"Copy"}</button>
+                  <div className="account-number-row">
+                    <span>Account Number: <b>{settings.bankAccountNumber}</b></span>
+                    <button type="button" className="copy-account" onClick={async()=>{await navigator.clipboard.writeText(settings.bankAccountNumber);setCopied(true);setTimeout(()=>setCopied(false),2200)}}>{copied?"Copied ✓":"Copy"}</button>
+                  </div>
                   <small>
                     Transfer the exact order total, then click the button below.
                     Your payment will be verified before fulfilment.
