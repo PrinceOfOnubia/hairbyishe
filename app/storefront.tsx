@@ -181,6 +181,20 @@ export function Footer() {
           </div>
         </div>
       </div>
+      <div className="registration-trust">
+        <p>
+          HairByIshe is a registered Nigerian business under the Corporate
+          Affairs Commission (CAC).
+        </p>
+        <p>Registration No: 9659608</p>
+        <a
+          href="/documents/cac-certificate.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          View Certificate
+        </a>
+      </div>
       <div className="footer-bottom">
         © 2026 HairByIshe <span><Link href="/privacy-policy">Privacy</Link> · <Link href="/terms-and-conditions">Terms</Link> · <Link href="/delivery-information">Delivery</Link> · <Link href="/returns-policy">Returns</Link></span>
       </div>
