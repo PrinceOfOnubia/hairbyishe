@@ -1,5 +1,7 @@
-import { requireChatGPTUser } from "../chatgpt-auth";
+import { cookies } from "next/headers";
 import { AdminDashboard } from "./admin-dashboard";
+import { AdminLogin } from "./admin-login";
+import { ADMIN_COOKIE, verifyAdminSession } from "./auth";
 export const dynamic="force-dynamic";
 export const metadata={title:"Studio Admin",robots:{index:false,follow:false}};
-export default async function Page(){const user=await requireChatGPTUser("/admin");return <AdminDashboard email={user.email}/>}
+export default async function Page(){const store=await cookies();if(!verifyAdminSession(store.get(ADMIN_COOKIE)?.value))return <AdminLogin/>;return <AdminDashboard email={process.env.ADMIN_USERNAME||"admin"}/>}
