@@ -126,3 +126,23 @@ footer{font-size:16px}.footer-top h4{font-size:17px}.footer-top a,.footer-top p{
 @media(max-width:360px){
   .wordmark{width:62vw;height:116px}
 }
+
+/* Announcement scrolls away; the primary shopping header stays available on every device. */
+.announcement{position:relative;z-index:1}
+.header{
+  position:sticky;
+  top:0;
+  z-index:55;
+  box-shadow:0 1px 0 rgba(0,0,0,.12);
+}
+
+/* Balance the larger mobile logo against the wider action cluster on the right. */
+@media(max-width:900px){
+  .wordmark{
+    left:calc(50% - clamp(22px,7vw,32px));
+  }
+}
+
+@media(max-width:360px){
+  .wordmark{width:60vw}
+}
