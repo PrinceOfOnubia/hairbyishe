@@ -28,9 +28,6 @@ export function Announcement() {
   return (
     <div className="announcement">
       <span>
-        <MapPin /> {settings.locations.join(" & ")}
-      </span>
-      <span>
         <Phone /> +234 803 863 6561
       </span>
       <span>

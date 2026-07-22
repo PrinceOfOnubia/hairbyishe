@@ -33,3 +33,7 @@ footer{font-size:16px}.footer-top h4{font-size:17px}.footer-top a,.footer-top p{
 /* Header and product refinements */
 .header{height:150px}.wordmark{width:400px;height:130px}.nav-actions a[aria-label="Wishlist"]{position:relative}.product-detail details[open]>p{display:block;color:#666;line-height:1.75;margin:14px 0}.product-detail details[open] summary svg{transform:rotate(45deg)}
 @media(max-width:900px){.header{height:116px}.wordmark{width:230px;height:100px}.nav-actions>a[aria-label="Wishlist"]{display:block!important}.nav-actions{gap:11px}.nav-actions svg,.mobile-icon svg,.header-cart svg{width:22px;height:22px}}
+
+/* The announcement scrolls normally; the shopping header remains accessible. */
+.header{position:sticky;top:0;z-index:50}.announcement{justify-content:center}.announcement span{justify-content:center;text-align:center}
+@media(max-width:900px){.announcement{display:grid;grid-template-columns:1fr;height:auto;min-height:88px;padding:12px 16px;gap:8px}.announcement span{width:100%;white-space:normal;line-height:1.35}}
