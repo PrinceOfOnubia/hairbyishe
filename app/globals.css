@@ -166,5 +166,11 @@ footer{font-size:16px}.footer-top h4{font-size:17px}.footer-top a,.footer-top p{
 
 /* Add restrained visual weight to the transparent header wordmark and tagline. */
 .wordmark img{
-  filter:drop-shadow(.7px 0 0 #000) drop-shadow(-.7px 0 0 #000) drop-shadow(0 .7px 0 #000) drop-shadow(0 -.7px 0 #000);
+  filter:drop-shadow(.3px 0 0 #000) drop-shadow(-.3px 0 0 #000) drop-shadow(0 .3px 0 #000) drop-shadow(0 -.3px 0 #000);
+}
+
+@media(max-width:900px){
+  .wordmark img{
+    filter:drop-shadow(.7px 0 0 #000) drop-shadow(-.7px 0 0 #000) drop-shadow(0 .7px 0 #000) drop-shadow(0 -.7px 0 #000);
+  }
 }
