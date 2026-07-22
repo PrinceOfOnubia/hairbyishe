@@ -60,9 +60,10 @@ export function Header() {
         </nav>
         <Link href="/" className="wordmark">
           <img
-            src="/hairbyishe-logo-transparent.png"
-            alt="Hair by Ishe — A World of Quality Hairs"
+            src="/hairbyishe-wordmark.png"
+            alt="Hair by Ishe"
           />
+          <span className="wordmark-tagline">A World of Quality Hairs</span>
         </Link>
         <div className="nav-actions">
           <button onClick={() => setSearch(!search)} aria-label="Search">

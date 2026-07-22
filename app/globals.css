@@ -163,3 +163,41 @@ footer{font-size:16px}.footer-top h4{font-size:17px}.footer-top a,.footer-top p{
 @media(max-width:900px){
   .wordmark{position:absolute}
 }
+
+/* Preserve the original fine wordmark while making its tagline independently readable. */
+.wordmark{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:2px;
+}
+.wordmark img{height:auto;object-fit:contain}
+.wordmark-tagline{
+  display:block;
+  width:82%;
+  color:#000;
+  font-family:var(--font-sans),sans-serif;
+  font-size:11px;
+  font-weight:600;
+  line-height:1;
+  letter-spacing:.25em;
+  text-align:center;
+  text-transform:uppercase;
+  white-space:nowrap;
+}
+
+@media(min-width:901px){
+  .header{height:205px}
+  .wordmark{width:min(48vw,620px);height:auto}
+  .hero{height:calc(100svh - 249px)}
+}
+
+@media(max-width:900px){
+  .wordmark{height:auto}
+  .wordmark-tagline{width:88%;font-size:9px;letter-spacing:.22em}
+}
+
+@media(max-width:360px){
+  .wordmark-tagline{font-size:8px;letter-spacing:.18em}
+}
