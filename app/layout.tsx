@@ -45,7 +45,7 @@ export const metadata: Metadata = {
     description: "Premium human hair wigs, delivered nationwide.",
     images: ["/og.png"],
   },
-  icons: { icon: "/favicon.svg" },
+  icons: { icon: "/icon.jpg" },
 };
 
 export default async function RootLayout({
