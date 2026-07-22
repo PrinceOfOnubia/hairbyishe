@@ -43,3 +43,5 @@ footer{font-size:16px}.footer-top h4{font-size:17px}.footer-top a,.footer-top p{
 /* Keep every announcement icon attached to its text at narrow widths. */
 @media(max-width:900px){.announcement{display:grid;grid-template-columns:1fr;align-content:center;min-height:112px;padding:10px 14px;gap:7px;font-size:clamp(12px,3.5vw,14px);line-height:1.25}.announcement span{display:grid!important;grid-template-columns:18px minmax(0,1fr);align-items:center;justify-items:start;width:min(100%,360px)!important;margin:0 auto;gap:8px;text-align:left;white-space:normal}.announcement span svg{width:18px;height:18px;margin:0}.announcement-phone{white-space:nowrap!important}.announcement-phone,.announcement-location{max-width:230px}.announcement-delivery{max-width:360px}}
 @media(max-width:340px){.announcement{padding-inline:10px;font-size:12px}.announcement-delivery{max-width:300px}}
+
+.insta-grid .tiktok-mark{position:absolute;inset:0;margin:auto;width:42px;height:42px;display:grid;place-items:center;color:#fff;font-size:34px;opacity:0;transition:.3s}.insta-grid a:hover .tiktok-mark{opacity:1}

@@ -464,15 +464,15 @@ export function HomePage() {
             <p className="eyebrow">Follow the journey</p>
             <h2>@hairbyishe</h2>
           </div>
-          <a href={settings.instagram}>
-            View Instagram <ArrowRight />
+          <a href={settings.tiktok} target="_blank" rel="noreferrer">
+            View TikTok <ArrowRight />
           </a>
         </div>
         <div className="insta-grid">
           {displayProducts.map((p, i) => (
-            <a key={p.id} href={settings.instagram}>
+            <a key={p.id} href={settings.tiktok} target="_blank" rel="noreferrer">
               <img src={p.image} alt={`HairByIshe gallery ${i + 1}`} />
-              <Camera />
+              <span className="tiktok-mark">♪</span>
             </a>
           ))}
         </div>
