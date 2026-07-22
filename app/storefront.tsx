@@ -59,16 +59,10 @@ export function Header() {
           <Link href="/about">Our Story</Link>
         </nav>
         <Link href="/" className="wordmark">
-          <picture>
-            <source
-              media="(min-width: 901px)"
-              srcSet="/hairbyishe-header-logo-desktop.png"
-            />
-            <img
-              src="/hairbyishe-header-logo.png"
-              alt="Hair by Ishe — A World of Quality Hairs"
-            />
-          </picture>
+          <img
+            src="/hairbyishe-logo-transparent.png"
+            alt="Hair by Ishe — A World of Quality Hairs"
+          />
         </Link>
         <div className="nav-actions">
           <button onClick={() => setSearch(!search)} aria-label="Search">
