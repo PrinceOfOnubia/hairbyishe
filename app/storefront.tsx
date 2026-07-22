@@ -60,7 +60,7 @@ export function Header() {
         </nav>
         <Link href="/" className="wordmark">
           <img
-            src="/hairbyishe-wordmark.png"
+            src="/hairbyishe-attached-wordmark.png"
             alt="Hair by Ishe"
           />
           <span className="wordmark-tagline">A World of Quality Hairs</span>

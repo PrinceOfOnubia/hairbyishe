@@ -201,3 +201,10 @@ footer{font-size:16px}.footer-top h4{font-size:17px}.footer-top a,.footer-top p{
 @media(max-width:360px){
   .wordmark-tagline{font-size:8px;letter-spacing:.18em}
 }
+
+/* Latest logo balance: reduce only the handwritten mark, not the tagline. */
+.wordmark img{width:78%;height:auto}
+
+@media(max-width:900px){
+  .wordmark img{width:72%}
+}
