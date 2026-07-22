@@ -110,3 +110,19 @@ footer{font-size:16px}.footer-top h4{font-size:17px}.footer-top a,.footer-top p{
   .nav-actions{gap:5px}
   .nav-actions svg,.mobile-icon svg,.header-cart svg{width:20px;height:20px}
 }
+
+/* Give the brand mark stronger presence while preserving the existing header composition. */
+@media(min-width:901px){
+  .header{height:175px}
+  .wordmark{width:540px;height:160px}
+  .hero{height:calc(100svh - 219px)}
+}
+
+@media(max-width:900px){
+  .header{height:130px}
+  .wordmark{width:min(64vw,270px);height:124px}
+}
+
+@media(max-width:360px){
+  .wordmark{width:62vw;height:116px}
+}
