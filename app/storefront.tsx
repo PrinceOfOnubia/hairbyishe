@@ -9,31 +9,32 @@ import {
   ChevronDown,
   Heart,
   Menu,
+  MapPin,
   Minus,
   Plus,
   Search,
   ShoppingBag,
   Truck,
-  UserRound,
+  Phone,
   X,
 } from "lucide-react";
 import { categories, formatPriceNGN, products, type Product } from "./data";
 import { cartKey, useCart } from "./cart-context";
-
-const socials = {
-  instagram: "https://www.instagram.com/hairbyishe",
-  tiktok: "https://www.tiktok.com/@hairbyishe_2",
-  whatsapp: "https://wa.me/2348038636561",
-};
-const whatsappLink = (message: string) =>
-  `${socials.whatsapp}?text=${encodeURIComponent(message)}`;
+import { useCms } from "./cms-context";
 
 export function Announcement() {
+  const { settings } = useCms();
   return (
     <div className="announcement">
-      <span>📍 Akure & Lagos</span>
-      <span>📞 08038636561</span>
-      <span>🚚 Nationwide Delivery Across Nigeria</span>
+      <span>
+        <MapPin /> {settings.locations.join(" & ")}
+      </span>
+      <span>
+        <Phone /> +234 803 863 6561
+      </span>
+      <span>
+        <Truck /> {settings.deliveryText}
+      </span>
     </div>
   );
 }
@@ -42,6 +43,7 @@ export function Header() {
   const [menu, setMenu] = useState(false);
   const [search, setSearch] = useState(false);
   const { count, setOpen } = useCart();
+  const { settings } = useCms();
   return (
     <>
       <Announcement />
@@ -59,7 +61,7 @@ export function Header() {
         </nav>
         <Link href="/" className="wordmark">
           <img
-            src="/hairbyishe-logo.jpg"
+            src="/hairbyishe-logo-transparent.png"
             alt="Hair by Ishe — A World of Quality Hairs"
           />
         </Link>
@@ -67,9 +69,6 @@ export function Header() {
           <button onClick={() => setSearch(!search)} aria-label="Search">
             <Search />
           </button>
-          <Link href="/admin" aria-label="Account">
-            <UserRound />
-          </Link>
           <Link href="/wishlist" aria-label="Wishlist">
             <Heart />
           </Link>
@@ -118,10 +117,10 @@ export function Header() {
             <Link href="/about">Our Story</Link>
             <Link href="/contact">Contact</Link>
             <div className="menu-social">
-              <a href={socials.instagram}>
-                  <Camera /> Instagram
+              <a href={settings.instagram}>
+                <Camera /> Instagram
               </a>
-              <a href={socials.tiktok}>
+              <a href={settings.tiktok}>
                 <b>♪</b> TikTok
               </a>
             </div>
@@ -134,23 +133,20 @@ export function Header() {
 }
 
 export function Footer() {
+  const { settings } = useCms();
   return (
     <footer>
       <div className="footer-top">
         <div>
           <Link className="footer-logo" href="/">
-            <img src="/hairbyishe-logo.jpg" alt="Hair by Ishe" />
+            <img src="/hairbyishe-logo-transparent.png" alt="Hair by Ishe" />
           </Link>
-          <p>
-            Thoughtfully sourced hair. Beautifully made units.
-            <br />
-            Made personal, just for you.
-          </p>
+          <p>{settings.footerText}</p>
           <div className="socials">
-            <a href={socials.instagram}>
+            <a href={settings.instagram}>
               <Camera /> Instagram
             </a>
-            <a href={socials.tiktok}>♪ TikTok</a>
+            <a href={settings.tiktok}>♪ TikTok</a>
           </div>
         </div>
         <div>
@@ -158,14 +154,21 @@ export function Footer() {
           <Link href="/collections">Shop All</Link>
           <Link href="/about">Our Story</Link>
           <Link href="/contact">Contact</Link>
-          <Link href="/admin">Admin</Link>
         </div>
         <div>
           <h4>Customer Support</h4>
-          <a href="tel:08038636561">📞 08038636561</a>
-          <a href={socials.whatsapp}>💬 WhatsApp Available</a>
-          <p>🚚 Nationwide Delivery Across Nigeria</p>
-          <p>📍 Akure & Lagos</p>
+          <a href="tel:08038636561">
+            <Phone /> +234 803 863 6561
+          </a>
+          <a href={`https://wa.me/${settings.whatsapp}`}>
+            WhatsApp Available
+          </a>
+          <p>
+            <Truck /> {settings.deliveryText}
+          </p>
+          <p>
+            <MapPin /> {settings.locations.join(" & ")}
+          </p>
         </div>
         <div>
           <h4>The Ishe Edit</h4>
@@ -331,6 +334,13 @@ export function ProductCard({
 }
 
 export function HomePage() {
+  const {
+    products: cmsProducts,
+    content,
+    settings,
+    testimonials: cmsTestimonials,
+  } = useCms();
+  const displayProducts = cmsProducts.length ? cmsProducts : products;
   return (
     <Shell>
       <section className="hero">
@@ -340,21 +350,14 @@ export function HomePage() {
         />
         <div className="hero-copy">
           <p className="eyebrow">The Signature Collection</p>
-          <h1>
-            Hair that feels
-            <br />
-            <em>like you.</em>
-          </h1>
-          <p>
-            Premium human hair wigs, carefully made for the woman who knows her
-            own style.
-          </p>
+          <h1>{content.heroTitle}</h1>
+          <p>{content.heroSubtitle}</p>
           <div>
             <Link className="button light" href="/collections">
-              Shop now <ArrowRight />
+              {content.heroPrimaryButton} <ArrowRight />
             </Link>
             <Link className="text-link" href="/contact">
-              Contact us
+              {content.heroSecondaryButton}
             </Link>
           </div>
         </div>
@@ -390,14 +393,17 @@ export function HomePage() {
           </Link>
         </div>
         <div className="product-grid">
-          {products.map((p, i) => (
+          {displayProducts.map((p, i) => (
             <ProductCard key={p.id} product={p} index={i} />
           ))}
         </div>
       </section>
       <section className="category-section">
         <div className="category-visual">
-          <img src={products[2].image} alt="Curly hair collection" />
+          <img
+            src={(displayProducts[2] || displayProducts[0]).image}
+            alt="Curly hair collection"
+          />
           <span>Raw. Real. Remarkable.</span>
         </div>
         <div className="category-list">
@@ -447,20 +453,20 @@ export function HomePage() {
           </article>
         </div>
       </section>
-      <Testimonials />
+      <Testimonials items={cmsTestimonials} />
       <section className="insta">
         <div className="section-head">
           <div>
             <p className="eyebrow">Follow the journey</p>
             <h2>@hairbyishe</h2>
           </div>
-          <a href={socials.instagram}>
+          <a href={settings.instagram}>
             View Instagram <ArrowRight />
           </a>
         </div>
         <div className="insta-grid">
-          {products.map((p, i) => (
-            <a key={p.id} href={socials.instagram}>
+          {displayProducts.map((p, i) => (
+            <a key={p.id} href={settings.instagram}>
               <img src={p.image} alt={`HairByIshe gallery ${i + 1}`} />
               <Camera />
             </a>
@@ -495,15 +501,20 @@ const testimonials = [
   "Very soft and premium hair. Customer service was amazing.",
   "One of the best hair vendors I've purchased from.",
 ];
-function Testimonials() {
+function Testimonials({
+  items,
+}: {
+  items: Array<{ id: string; name: string; location: string; quote: string }>;
+}) {
+  const quotes = items.length ? items.map((item) => item.quote) : testimonials;
   const [slide, setSlide] = useState(0);
   useEffect(() => {
     const timer = setInterval(
-      () => setSlide((value) => (value + 1) % testimonials.length),
+      () => setSlide((value) => (value + 1) % quotes.length),
       5500,
     );
     return () => clearInterval(timer);
-  }, []);
+  }, [quotes.length]);
   return (
     <section className="testimonials">
       <p className="eyebrow">Client love</p>
@@ -511,7 +522,7 @@ function Testimonials() {
         className="testimonial-track"
         style={{ "--slide": slide } as React.CSSProperties}
       >
-        {testimonials.map((quote, index) => (
+        {quotes.map((quote, index) => (
           <article key={quote}>
             <div>★★★★★</div>
             <blockquote>“{quote}”</blockquote>
@@ -520,7 +531,7 @@ function Testimonials() {
         ))}
       </div>
       <div className="testimonial-dots">
-        {testimonials.map((_, index) => (
+        {quotes.map((_, index) => (
           <button
             aria-label={`Show testimonial ${index + 1}`}
             className={slide === index ? "active" : ""}
@@ -534,12 +545,14 @@ function Testimonials() {
 }
 
 export function CollectionsPage() {
+  const { products: cmsProducts } = useCms();
+  const collectionProducts = cmsProducts.length ? cmsProducts : products;
   const [category, setCategory] = useState("All");
   const [sort, setSort] = useState("featured");
   const [query, setQuery] = useState("");
   const visible = useMemo(
     () =>
-      products
+      collectionProducts
         .filter(
           (p) =>
             (category === "All" || p.category === category) &&
@@ -552,7 +565,7 @@ export function CollectionsPage() {
               ? b.price - a.price
               : 0,
         ),
-    [category, sort, query],
+    [category, sort, query, collectionProducts],
   );
   return (
     <Shell>
@@ -616,6 +629,7 @@ export function ProductPage({ product }: { product: Product }) {
   const [qty, setQty] = useState(1);
   const [buyOpen, setBuyOpen] = useState(false);
   const { addItem } = useCart();
+  const { products: cmsProducts, settings } = useCms();
   useEffect(() => {
     const recent = JSON.parse(localStorage.getItem("recent") || "[]");
     localStorage.setItem(
@@ -699,7 +713,7 @@ export function ProductPage({ product }: { product: Product }) {
           </button>
           <a
             className="button whatsapp-order"
-            href={whatsappLink(message)}
+            href={`https://wa.me/${settings.whatsapp}?text=${encodeURIComponent(message)}`}
             target="_blank"
           >
             Order via WhatsApp <ArrowRight />
@@ -745,7 +759,7 @@ export function ProductPage({ product }: { product: Product }) {
             </Link>
             <a
               className="button outline"
-              href={whatsappLink(message)}
+              href={`https://wa.me/${settings.whatsapp}?text=${encodeURIComponent(message)}`}
               target="_blank"
             >
               Order via WhatsApp
@@ -758,7 +772,7 @@ export function ProductPage({ product }: { product: Product }) {
           <h2>You may also like</h2>
         </div>
         <div className="product-grid">
-          {products
+          {(cmsProducts.length ? cmsProducts : products)
             .filter((p) => p.id !== product.id)
             .slice(0, 3)
             .map((p, i) => (
@@ -775,6 +789,8 @@ export function SimplePage({
 }: {
   type: "about" | "contact" | "cart" | "wishlist";
 }) {
+  const { settings, products: cmsProducts } = useCms();
+  const displayProducts = cmsProducts.length ? cmsProducts : products;
   if (type === "cart") return <CartPage />;
   if (type === "wishlist")
     return (
@@ -819,7 +835,7 @@ export function SimplePage({
           </p>
         </section>
         <section className="story-image">
-          <img src={products[0].image} alt="HairByIshe craft" />
+          <img src={displayProducts[0].image} alt="HairByIshe craft" />
           <div>
             <p className="eyebrow">Small by design</p>
             <h2>Care in every detail.</h2>
@@ -843,24 +859,25 @@ export function SimplePage({
             Phone: <a href="tel:08038636561">08038636561</a>
           </p>
           <p>
-            WhatsApp: <a href={socials.whatsapp}>08038636561</a>
+            WhatsApp:{" "}
+            <a href={`https://wa.me/${settings.whatsapp}`}>+234 803 863 6561</a>
           </p>
         </div>
         <div className="contact-grid">
-          <a href={socials.whatsapp}>
+          <a href={`https://wa.me/${settings.whatsapp}`}>
             <span>01</span>
             <h2>WhatsApp</h2>
             <p>Product advice, custom units and order enquiries.</p>
             <b>Click to Chat on WhatsApp</b>
             <ArrowRight />
           </a>
-          <a href={socials.instagram}>
+          <a href={settings.instagram}>
             <span>02</span>
             <h2>Instagram</h2>
             <p>Follow new drops and client transformations.</p>
             <ArrowRight />
           </a>
-          <a href={socials.tiktok}>
+          <a href={settings.tiktok}>
             <span>03</span>
             <h2>TikTok</h2>
             <p>Hair inspiration, styling and behind the scenes.</p>
@@ -881,6 +898,7 @@ export function SimplePage({
 
 function CartPage() {
   const { items, total, removeItem, updateQuantity } = useCart();
+  const { settings } = useCms();
   const message = `Hello HairByIshe,\n\nI would like to place an order.\n\nItems:\n${items.map((i) => `${i.quantity} × ${i.name} (${i.length}, ${i.density}) — ${formatPriceNGN(i.price * i.quantity)}`).join("\n")}\n\nTotal:\n${formatPriceNGN(total)}\n\nPlease assist me with payment and delivery.`;
   return (
     <Shell>
@@ -945,7 +963,7 @@ function CartPage() {
               </Link>
               <a
                 className="button outline"
-                href={whatsappLink(message)}
+                href={`https://wa.me/${settings.whatsapp}?text=${encodeURIComponent(message)}`}
                 target="_blank"
               >
                 Checkout via WhatsApp

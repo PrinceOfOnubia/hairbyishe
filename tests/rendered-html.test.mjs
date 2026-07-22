@@ -5,10 +5,10 @@ import test from "node:test";
 test("ships the supplied HairByIshe brand imagery", async () => {
   const [storefront, logo, hero] = await Promise.all([
     readFile(new URL("../app/storefront.tsx", import.meta.url), "utf8"),
-    readFile(new URL("../public/hairbyishe-logo.jpg", import.meta.url)),
+    readFile(new URL("../public/hairbyishe-logo-transparent.png", import.meta.url)),
     readFile(new URL("../public/hero-hairbyishe.jpg", import.meta.url)),
   ]);
-  assert.match(storefront, /\/hairbyishe-logo\.jpg/);
+  assert.match(storefront, /\/hairbyishe-logo-transparent\.png/);
   assert.match(storefront, /\/hero-hairbyishe\.jpg/);
   assert.ok(logo.length > 10_000);
   assert.ok(hero.length > 10_000);

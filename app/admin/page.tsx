@@ -1,9 +1,3 @@
-import { cookies } from "next/headers";
-import { AdminDashboard } from "./admin-dashboard";
-import { AdminLogin } from "./admin-login";
-import { ADMIN_COOKIE, verifyAdminSession } from "./auth";
-import { PrismaClient } from "@prisma/client";
-const prisma = new PrismaClient();
-export const dynamic="force-dynamic";
-export const metadata={title:"Studio Admin",robots:{index:false,follow:false}};
-export default async function Page(){const store=await cookies();if(!verifyAdminSession(store.get(ADMIN_COOKIE)?.value))return <AdminLogin/>;const orders=await prisma.order.findMany({orderBy:{createdAt:"desc"},take:100,include:{items:{include:{product:true}}}});return <AdminDashboard email={process.env.ADMIN_USERNAME||"admin"} orders={orders.map(order=>({...order,createdAt:order.createdAt.toISOString(),updatedAt:order.updatedAt.toISOString()}))}/>}
+import { cookies } from "next/headers";import { AdminDashboard } from "./admin-dashboard";import { AdminLogin } from "./admin-login";import { ADMIN_COOKIE,verifyAdminSession } from "./auth";import { prisma } from "../lib/prisma";
+export const dynamic="force-dynamic";export const metadata={title:"Studio Admin",robots:{index:false,follow:false}};
+export default async function Page(){const store=await cookies();if(!verifyAdminSession(store.get(ADMIN_COOKIE)?.value))return <AdminLogin/>;const [orders,products,settings,content,testimonials]=await Promise.all([prisma.order.findMany({orderBy:{createdAt:"desc"},take:100,include:{items:{include:{product:true}}}}),prisma.product.findMany({include:{category:true,images:{orderBy:{position:"asc"}}},orderBy:{createdAt:"desc"}}),prisma.storeSettings.findUnique({where:{id:"store"}}),prisma.contentBlock.findUnique({where:{key:"homepage"}}),prisma.testimonial.findMany({orderBy:{position:"asc"}})]);return <AdminDashboard email={process.env.ADMIN_USERNAME||"admin"} orders={orders.map(order=>({...order,createdAt:order.createdAt.toISOString(),updatedAt:order.updatedAt.toISOString()}))} products={products.map(product=>({...product,createdAt:product.createdAt.toISOString(),updatedAt:product.updatedAt.toISOString()}))} settings={settings} content={(content?.value||{}) as Record<string,string>} testimonials={testimonials}/>}

@@ -1,6 +1,7 @@
 export type Product = {
   id: string; name: string; price: number; category: string; image: string;
   tag?: string; featured?: boolean; bestSeller?: boolean; description: string;
+  dbId?: string; images?: string[]; inventory?: number;
 };
 
 export const categories = ["Lace Wigs", "Frontal Wigs", "Closure Wigs", "Bone Straight", "Curly Hair", "Body Wave", "Raw Hair", "Accessories"];
