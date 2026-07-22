@@ -91,18 +91,6 @@ export function CheckoutPage() {
                     Phone Number
                     <input required name="phone" autoComplete="tel" />
                   </label>
-                  <label>
-                    State
-                    <input required name="state" />
-                  </label>
-                  <label>
-                    City
-                    <input required name="city" />
-                  </label>
-                  <label className="wide">
-                    Full Address
-                    <textarea required name="address" />
-                  </label>
                   <label className="wide">
                     Additional Notes
                     <textarea name="notes" />
@@ -127,8 +115,9 @@ export function CheckoutPage() {
                     Park Pickup
                   </label>
                 </div>
+                {delivery === "DOOR_DELIVERY" && <div className="form-grid delivery-address-fields"><label>Delivery State<input required name="state"/></label><label>Delivery City<input required name="city"/></label><label className="wide">Delivery Address<textarea required name="address" placeholder="House number, street and nearest landmark"/></label></div>}
                 {delivery === "PARK_PICKUP" && (
-                  <div className="form-grid pickup-fields"><label>State<input required name="pickupState"/></label><label>City<input required name="pickupCity"/></label><label className="wide">Preferred Pickup Location<input required name="pickupLocation" placeholder="Enter a convenient motor park or pickup point"/></label></div>
+                  <div className="form-grid pickup-fields"><label>Pickup State<input required name="state"/></label><label>Pickup City<input required name="city"/></label><label className="wide">Preferred Pickup Location<input required name="pickupLocation" placeholder="Enter a convenient motor park or pickup point"/></label><input type="hidden" name="address" value="Park pickup"/></div>
                 )}
                 <div className="shipping-summary"><b>Shipping & returns</b><p>Nationwide Delivery Across Nigeria. International Shipping Available.</p><p>7–14 day return window. Items must be unused and in original packaging and condition.</p></div>
               </section>

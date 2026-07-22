@@ -43,7 +43,7 @@ export function Announcement() {
 export function Header() {
   const [menu, setMenu] = useState(false);
   const [search, setSearch] = useState(false);
-  const { count, setOpen } = useCart();
+  const { count, wishlist, setOpen } = useCart();
   const { settings } = useCms();
   return (
     <>
@@ -57,6 +57,7 @@ export function Header() {
           <Menu />
         </button>
         <nav className="nav-left">
+          <Link href="/">Home</Link>
           <Link href="/collections">Shop</Link>
           <Link href="/about">Our Story</Link>
         </nav>
@@ -72,6 +73,7 @@ export function Header() {
           </button>
           <Link href="/wishlist" aria-label="Wishlist">
             <Heart />
+            {wishlist.length > 0 && <b>{wishlist.length}</b>}
           </Link>
           <button
             className="header-cart"
@@ -724,7 +726,7 @@ export function ProductPage({ product }: { product: Product }) {
               <p>Carefully packaged and delivered across Nigeria.</p>
             </div>
           </div>
-          <details>
+          <details open>
             <summary>
               Care & maintenance <Plus />
             </summary>
@@ -733,7 +735,7 @@ export function ProductPage({ product }: { product: Product }) {
               products.
             </p>
           </details>
-          <details>
+          <details open>
             <summary>
               Delivery information <Plus />
             </summary>
