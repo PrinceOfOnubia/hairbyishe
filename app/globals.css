@@ -159,3 +159,27 @@ footer{font-size:16px}.footer-top h4{font-size:17px}.footer-top a,.footer-top p{
 @media(max-width:360px){
   .nav-actions svg,.mobile-icon svg,.header-cart svg{width:24px;height:24px}
 }
+
+/* Lift only the fine-print brand promise; the handwritten mark remains unchanged. */
+.wordmark{position:relative}
+.wordmark::after{
+  content:"A WORLD OF QUALITY HAIRS";
+  position:absolute;
+  left:50%;
+  bottom:12%;
+  transform:translateX(-50%);
+  padding:3px 8px;
+  background:#fff;
+  color:#000;
+  font-family:var(--font-sans),sans-serif;
+  font-size:11px;
+  font-weight:600;
+  line-height:1;
+  letter-spacing:.3em;
+  white-space:nowrap;
+}
+
+@media(max-width:900px){
+  .wordmark{position:absolute}
+  .wordmark::after{font-size:8px;letter-spacing:.27em;padding-inline:6px}
+}
