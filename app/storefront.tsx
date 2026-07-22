@@ -498,11 +498,12 @@ export function HomePage() {
 }
 
 const testimonials = [
-  "The quality exceeded my expectations. Delivery to Lagos was very fast.",
-  "My wig looked exactly like the pictures. Definitely ordering again.",
-  "Very soft and premium hair. Customer service was amazing.",
-  "One of the best hair vendors I've purchased from.",
+  "Loved the quality.",
+  "Exactly what I ordered.",
+  "Fast delivery and premium hair.",
+  "One of the best hair vendors.",
 ];
+const testimonialNames=["Chioma Tiktok.","Temitope O.","Amaka E.","Adebimpe A."];
 function Testimonials({
   items,
 }: {
@@ -528,7 +529,7 @@ function Testimonials({
           <article key={quote}>
             <div>★★★★★</div>
             <blockquote>“{quote}”</blockquote>
-            <p>— HairByIshe Client</p>
+            <p>— {items[index]?.name||testimonialNames[index%testimonialNames.length]}</p>
           </article>
         ))}
       </div>
