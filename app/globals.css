@@ -206,13 +206,15 @@ footer{font-size:16px}.footer-top h4{font-size:17px}.footer-top a,.footer-top p{
 .wordmark img{width:62%;height:auto}
 
 @media(max-width:900px){
+  .header{height:104px}
   .wordmark{width:min(56vw,235px)}
-  .wordmark img{width:64%}
+  .wordmark img{width:68%}
   .wordmark-tagline{width:58%;font-size:7.25px;letter-spacing:.16em}
 }
 
 @media(max-width:360px){
+  .header{height:98px}
   .wordmark{width:58vw}
-  .wordmark img{width:62%}
+  .wordmark img{width:66%}
   .wordmark-tagline{width:56%;font-size:6.75px;letter-spacing:.13em}
 }
