@@ -188,9 +188,9 @@ footer{font-size:16px}.footer-top h4{font-size:17px}.footer-top a,.footer-top p{
 }
 
 @media(min-width:901px){
-  .header{height:205px}
+  .header{height:170px}
   .wordmark{width:min(48vw,620px);height:auto}
-  .hero{height:calc(100svh - 249px)}
+  .hero{height:calc(100svh - 214px)}
 }
 
 @media(max-width:900px){
@@ -217,4 +217,20 @@ footer{font-size:16px}.footer-top h4{font-size:17px}.footer-top a,.footer-top p{
   .wordmark{width:58vw}
   .wordmark img{width:66%}
   .wordmark-tagline{width:56%;font-size:6.75px;letter-spacing:.13em}
+}
+
+.story-founder-section{grid-template-columns:minmax(0,1fr) minmax(0,.82fr);align-items:start}
+.story-copy>p:not(.eyebrow),.founder-note p:not(.eyebrow){line-height:1.8}
+.founder-note{margin-top:42px}
+.founder-note .eyebrow{margin-bottom:22px}
+.founder-note p:not(.eyebrow){margin:0 0 16px;color:#222}
+.founder-signature{font-family:var(--font-display);font-style:italic;color:#000!important;margin-top:28px!important}
+.story-founder-image{margin:0;width:100%;align-self:start}
+.story-founder-image img{width:100%;height:auto;aspect-ratio:871/865;object-fit:cover;object-position:center top;border-radius:20px;filter:none}
+.story-founder-image figcaption{display:none}
+
+@media(max-width:900px){
+  .story-founder-section{grid-template-columns:1fr}
+  .story-founder-image{max-width:420px;margin:10px auto 0}
+  .story-founder-image figcaption{display:block;margin-top:14px;text-align:center;font-family:var(--font-display);font-size:18px;font-style:italic;color:#555}
 }

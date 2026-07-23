@@ -785,26 +785,61 @@ export function SimplePage({
   if (type === "about")
     return (
       <Shell>
-        <section className="story">
-          <div>
+        <motion.section
+          className="story story-founder-section"
+          initial={{ opacity: 0, y: 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.25 }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
+        >
+          <div className="story-copy">
             <p className="eyebrow">The HairByIshe story</p>
             <h1>
               Luxury hair,
               <br />
               <em>made personal.</em>
             </h1>
+            <p>
+              HairByIshe is a premium Nigerian hair brand offering human hair
+              wigs, raw hair, ready-to-wear units and custom wig services. We
+              believe luxury is not about being loud—it is about quality you can
+              feel, thoughtful service and hair that lets you move through life
+              with confidence.
+              <br />
+              <br />
+              Available in Akure & Lagos. Delivery nationwide.
+            </p>
+            <div className="founder-note">
+              <p className="eyebrow">Meet the vision behind HairByIshe</p>
+              <p>
+                HairByIshe was founded with one simple belief: every woman
+                deserves hair that makes her feel confident, beautiful and
+                effortlessly herself.
+              </p>
+              <p>
+                What started as a passion for sourcing premium-quality human
+                hair has grown into a brand trusted by women who value
+                craftsmanship, authenticity and exceptional service.
+              </p>
+              <p>
+                Every unit is carefully selected with attention to quality,
+                longevity and natural beauty, ensuring every customer receives
+                hair that looks as beautiful in real life as it does in our
+                collections.
+              </p>
+              <p>
+                Whether you&apos;re purchasing your first wig or adding to your
+                collection, our goal remains the same—to provide luxury hair
+                with a personal experience you can trust.
+              </p>
+              <p className="founder-signature">— Founder, HairByIshe</p>
+            </div>
           </div>
-          <p>
-            HairByIshe is a premium Nigerian hair brand offering human hair
-            wigs, raw hair, ready-to-wear units and custom wig services. We
-            believe luxury is not about being loud—it is about quality you can
-            feel, thoughtful service and hair that lets you move through life
-            with confidence.
-            <br />
-            <br />
-            Available in Akure & Lagos. Delivery nationwide.
-          </p>
-        </section>
+          <figure className="story-founder-image">
+            <img src="/founder-standing-portrait.jpg" alt="Founder of HairByIshe" />
+            <figcaption>Founder of HairByIshe</figcaption>
+          </figure>
+        </motion.section>
         <section className="story-image">
           <img src={displayProducts[0].image} alt="HairByIshe craft" />
           <div>
